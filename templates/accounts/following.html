@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+{% block content %}
+{% load static %}
+
+<div class="col-md-6">
+    <div class="card add-tweet-box">
+        <div class="card-title">
+            <h6 class="h5"><i class="fas fa-fish"></i> You Follow</h6>
+        </div>
+        <div class="card-body">
+            {% if obj.profile.get_following %}
+            {% for user_ in obj.profile.get_following%}
+
+            <div class="followers">
+                <a href="{{user_.profile.get_absolute_url}}">
+                    <div class='user-tweet-avatar'>
+                        {% if user_.profile.avatar  %}
+                        <img src='
+                        {{user_.profile.avatar.url}}' />
+                        {% else %}
+                        <img src="
+                        {% static 'images/blank-profile.png' %}" />
+                        {% endif %}
+                    </div>
+                    <span class="lead">
+                        {{user_.username}}
+
+                    </span>
+                </a>
+
+                {% if request.user.is_authenticated and request.user == object %}
+                <a href="{% url 'accounts:follow_manage' user_slug=user_.slug %}" class=" follow-btn btn btn-success">
+                    Unfollow
+                </a>
+
+                {% endif %}
+
+            </div>
+            {% endfor %}
+
+            {% else %}
+            <p class="lead">{{user.username|capfirst}} did not follow any user yet</p>
+            {% endif %}
+        </div>
+    </div>
+
+</div>
+
+{% endblock %}

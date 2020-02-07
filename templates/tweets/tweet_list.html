@@ -1,0 +1,89 @@
+{% extends 'base.html' %}
+
+{% block content %}
+	<div>
+	<div class="row">
+		<div class="col-md-3">
+				<div class="card" style="width: 15rem;">
+  					<div class="card-body text-center">
+  						<div class="row">
+  							<div class="col-12">
+  								<a  href='#' class="btn btn-link"><i class="fas fa-home fa-lg"></i> Home</a>		
+  							</div>
+  							<div class="col-12">
+  								<a href='#' class="btn btn-link"><i class="fas fa-user-circle fa-lg"></i> Profile</a>		
+  							</div>
+  							<div class="col-12">
+  								<a  href='#' class="btn btn-link">
+  									<i class="fas fa-plus fa-lg"></i> Tweet</a>		
+  							</div>
+  						</div>
+  						
+  						
+  					</div>
+				</div>		
+		</div>
+
+		<div class="col-md-6">
+				<div class="card">
+				  	<div class="card-body">
+				  		{% if tweets %}
+							{% for tweet in tweets %}
+						  		<section class="tweet"> 
+						  			<div class="tweet-header">
+						 	 			<span class=" btn-link">{{tweet.user.username|capfirst}}</span>
+						 	 			<span>. {{tweet.timestamp|timesince}}</span>
+						 	 		</div>
+
+						 	 		<div class="tweet-body">
+						 	 			<p class="lead">{{tweet.content}}</p>
+
+						 	 		</div>
+						 	 		<hr />
+						 	 	</section>
+						 	{% endfor %}
+						{% endif %}
+				 	 </div>
+				</div>			
+		</div>
+		<div class="col-md-3">
+				<div class="card" >
+  					<div class="card-body">
+  						 <form action="{% url 'tweets:list' %}" class="form-inline my-2 my-lg-0">
+					      <input class="form-control mr-sm-2" name='q'
+					             type="search" placeholder="Search" aria-label="Search">
+					      <button class="btn btn-outline-success my-2 my-sm-0" 
+					              type="submit">
+					            Search
+					      </button>
+					    </form>
+  					</div>
+				</div>		
+		</div>
+	</div>
+
+	<!-- <div class="row">
+		<div class="col-sm-12">
+			<h2>Tweets <hr></h2>
+		</div>
+		{% if tweets %}
+			{% for tweet in tweets %}
+				<div class="col-sm-12">
+					<p class="lead">{{tweet.content}}
+						<br>
+						<a href="{% url 'tweets:detail' pk=tweet.pk%}">View</a>
+						<span class="span" >{{tweet.timestamp|timesince}}</span>
+					</p>
+
+				</div>
+			{% endfor %}
+		{% else %}
+		{% if request.GET.q %}
+			<p>No Tweets Found</p>
+		{% else %}
+			<p>There are no tweets</p>
+		{% endif %}
+			
+		{% endif %}
+	</div> -->
+{% endblock %}

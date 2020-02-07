@@ -1,0 +1,36 @@
+{% extends 'layout.html' %}
+{% block nav %}
+{% include 'snippets/navbar.html' %}
+{% endblock %}
+{% block title %}Login{% endblock %}
+
+{% block auth %}
+{% load crispy_forms_tags %}
+<div class="container mt-5 mb-5">
+  <div class='row'>
+    {% if messages %}
+    <div class=" col-lg-8 offset-lg-2 alert alert-success messages text-center">
+      {% for message in messages %}
+      <span {% if message.tags %} class="{{ message.tags }}" {% endif %}>
+
+        {{ message }}
+      </span>
+      {% endfor %}
+    </div>
+    {% endif %}
+    <div class='col-lg-8 offset-lg-2'>
+      <h2 class=' text-center display-4 myh2 login-heading'> Login
+        <hr>
+      </h2>
+
+      <form method="post" class="login-form">
+        {% csrf_token %}
+        {{form|crispy}}
+        <input type="submit" value="Login">
+      </form>
+      <br>
+
+    </div>
+  </div>
+</div>
+{% endblock %}

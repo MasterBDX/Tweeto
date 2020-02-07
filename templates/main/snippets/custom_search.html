@@ -1,0 +1,40 @@
+{% load static %}
+<div class="col-md-3">
+    <div class="card search-box">
+        <div class="card-body">
+            {% include 'main/snippets/search_form.html'  %}
+            <div class="row">
+                <div class="col-md-12 results-heading">
+                    <h3 class="user-results">
+                        Users Results
+                    </h3>
+                </div>
+
+                {% if users %}
+                {% for user in users %}
+                <div class="col-md-12">
+                    <a class='' href='{% url 'accounts:profile' user_slug=user.slug %}'>
+                        <div style=" background-position: center;
+                                     background-image: url(
+                                            {% if user.profile.avatar %}
+                                                {{user.profile.avatar.url}}
+                                            {% else %}
+                                                {% static 'images/blank-profile.png' %}
+                                            {% endif %}
+                                            );
+                                        background-size: cover;" class="user-avatar">
+
+                        </div>
+                        <span>{{user.username}} </span>
+                    </a>
+                </div>
+                {% endfor %}
+                {% else %}
+                <p>No users found</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+
+</div>

@@ -1,0 +1,19 @@
+{% load crispy_forms_tags %}
+<form method="POST" class="addTweetForm" action='{% if action_url %}{{action_url}}{% endif %}'
+	enctype="multipart/form-data">
+	{% csrf_token %}
+
+	{{form|crispy}}
+	<div class="row">
+		<div class="col-md-4" id='emojis'></div>
+		<div class="col-md-4" id='image-uploader'></div>
+		<div class="col-md-4 text-right" id='tweet-counter'>
+			<span class='charsLeft'>
+
+			</span>
+		</div>
+	</div>
+	<br />
+	<button class="btn btn-{{status}} add-tweet-btn">{{mybtn}}</button>
+	<div class='my-alert-div'></div>
+</form>

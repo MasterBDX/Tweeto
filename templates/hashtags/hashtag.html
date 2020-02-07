@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="col-md-6">
+	<div class="card add-tweet-box">
+		<div class="card-title">
+			<h6 class="h5"><i class="fab fa-slack-hash"></i> {{obj.tag}}</h6>
+		</div>
+		<div class="card-body">
+
+			<section id='tag-tweets' data-url='/api/hashtag/{{obj.tag}}/'>
+
+			</section>
+			<section>
+				<div class="row">
+					<div class="col-md-12 text-center">
+						<button id='load-more-btn' class="btn btn-link">
+							Load more
+						</button>
+					</div>
+				</div>
+			</section>
+		</div>
+	</div>
+
+</div>
+
+{% endblock %}
+{% block script %}
+<script>
+	$(function () {
+		loadTweetsContainer('tag-tweets')
+	})
+</script>
+{% endblock %}

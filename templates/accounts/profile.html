@@ -1,0 +1,156 @@
+{% extends 'base.html' %}
+
+{% block title %}{% endblock %}
+
+{% block content %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+<div class="col-md-6 card">
+
+  <div class="card-title">
+    <h6 class="h5">
+      <i class="fas fa-user-circle"></i>&nbsp;
+      <span>{{user.username|capfirst}}</span> Profile
+
+    </h6>
+  </div>
+
+  <div class="user-profile">
+    <div class="profile-imgs">
+      <div class="profile-cover-img" style="
+              
+                background: url(
+                  {% if object.profile.cover %}
+                   {{object.profile.cover.url}});
+                  {% else %} 
+                   {% static 'images/default-cover.jpg' %}) center center;
+                  {% endif %}
+                background-size: cover;
+              ">
+
+        <div class="profile-img rounded-circle">
+          <img src="{% if object.profile.avatar %}
+                    {{object.profile.avatar.url}}
+                    {% else %}
+                    {% static 'images/blank-profile.png' %}
+                    {% endif %}
+                  ">
+        </div>
+
+        <div class="profile-user-name">
+          <h3>{{object.username|capfirst}}</h3>
+          {% if request.user == object %}
+          <a href="{% url 'accounts:profile_update' pk=object.pk %}">Edit</a>
+          {% endif %}
+        </div>
+
+      </div>
+    </div>
+
+
+    <div class="row">
+      {% if not me and request.user.is_authenticated %}
+      <div class="col-md-12 text-center">
+        <a id='{{object.slug}}' href="{% url 'accounts:follow' user_slug=object.slug %}" class=" follow-btn btn">
+          {% if is_followed %}
+          Unfollow
+          {% else %}
+          follow
+          {% endif %}
+        </a>
+      </div>
+      {% endif %}
+      <div class="col-md-6 text-center">
+
+        <a href="{% url 'accounts:following' user_slug=object.slug %}" class="lead following-num">
+          <i class="fa fa-user"></i> Following
+          {{object.profile.get_following.count}}
+        </a>
+      </div>
+
+      <div class="col-md-6 text-center">
+
+        <a href="{% url 'accounts:followers' user_slug=object.slug %}" class="lead followers-num">
+          <i class="fa fa-users"></i>
+          Followers
+          <span> {{object.followed_by.all.count}}</span>
+        </a>
+
+
+      </div>
+
+      {% if object.profile.country %}
+      <div class="col-md-4 offset-md-1 profile-info">
+        <span>Country</span> {{object.profile.country.name}} <img src={{object.profile.country.flag}} />
+      </div>
+      {% endif %}
+
+      {% if object.profile.birthday %}
+      <div class="col-md-4 offset-md-1 profile-info">
+        <span>Birthday</span> {{object.profile.birthday}}
+      </div>
+      {% endif %}
+
+      {% if object.profile.description  %}
+      <div class="col-md-8 offset-md-2 user-des text-center">
+        <h6>description</h6>
+        <p class="profile-des">{{object.profile.description}}</p>
+      </div>
+      {% endif %}
+
+    </div>
+    <div class="text-center">
+
+      <h5 class="user-tweets ">User Tweets</h5>
+    </div>
+    <section id='tweets' data-url='/api/{{object.slug}}/tweets/'>
+
+    </section>
+
+    <section>
+      <div class="row">
+        <div class="col-md-12 text-center">
+          <button id='load-more-btn' class="btn btn-link">
+            Load more
+          </button>
+        </div>
+      </div>
+    </section>
+  </div>
+
+
+</div>
+{% endblock %}
+
+
+{% block script %}
+<script>
+  $(function () {
+    loadTweetsContainer('tweets')
+  })
+</script>
+{% endblock %}
+
+
+
+
+<!-- {% with profiles=user.followed_by.all%}
+        {% if profiles %}
+        {% for profile in profiles  %}
+        {{profile.user.username}}
+        {% endfor %}
+        {% else %}
+        no one follow you
+        {% endif %}
+        {% endwith %} -->
+
+<!-- {% with users=user.profile.following.all%}
+        {% if users %}
+        {% for user in users  %}
+        {{user}}
+        {% endfor %}
+        {% else %}
+        You don't follow anyone
+        {% endif %}
+        {% endwith %} -->

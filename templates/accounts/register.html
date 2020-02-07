@@ -1,0 +1,23 @@
+{% extends 'layout.html' %}
+{% block title %}Register{% endblock %}
+{% block nav %}
+{% include 'snippets/navbar.html' %}
+{% endblock %}
+
+{% block auth %}
+{% load crispy_forms_tags %}
+<div class="container mt-5 mb-5">
+  <div class='row'>
+    <div class='col-lg-8 offset-lg-2'>
+      <h2 class=' text-center display-4 myh2 register-heading'> Register
+        <hr>
+      </h2>
+      <form method="post" class="register-form">
+        {% csrf_token %}
+        {{form|crispy}}
+        <input type="submit" value="Register">
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}

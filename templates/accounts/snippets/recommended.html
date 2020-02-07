@@ -1,0 +1,41 @@
+{% if user.is_authenticated %}
+{% load static %}
+<br />
+<br />
+
+<div class="card search-box">
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-12 results-heading">
+                <h3 class="user-results">
+                    Recommended Users
+
+                </h3>
+            </div>
+
+            {% if users %}
+            {% for profile in users %}
+            <div class="col-md-12">
+                <a class='' href='{% url 'accounts:profile' user_slug=profile.user.slug %}'>
+                    <div style="    background-position: center;
+                                    background-image: url(
+                                        {% if profile.avatar %}
+                                            {{profile.avatar.url}}
+                                        {% else %}
+                                            {% static 'images/blank-profile.png' %}
+                                        {% endif %}
+                                        );
+                                    background-size: cover;" class="user-avatar">
+
+                    </div>
+                    <span>{{profile.user.username}} </span>
+                </a>
+            </div>
+            {% endfor %}
+            {% else %}
+            <p>No users found</p>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endif %}

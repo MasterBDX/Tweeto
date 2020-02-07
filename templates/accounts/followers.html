@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+{% block content %}
+{% load static %}
+
+<div class="col-md-6">
+    <div class="card add-tweet-box">
+        <div class="card-title">
+            <h6 class="h5"><i class="fas fa-frog"></i> Followers</h6>
+        </div>
+        <div class="card-body">
+
+            {% if obj.followed_by.all %}
+            {% for profile in obj.followed_by.all %}
+
+            <div class="followers">
+                <a href="{{profile.get_absolute_url}}">
+                    <div class='user-tweet-avatar'>
+                        <img src='{{profile.avatar.url}}' />
+                    </div>
+                    <p class="lead">
+                        {{profile.user.username}}
+                    </p>
+                </a>
+            </div>
+            {% endfor %}
+            {% else %}
+            <p class="lead">{{user.username|capfirst}} have no followers</p>
+            {% endif %}
+        </div>
+    </div>
+
+</div>
+
+{% endblock %}

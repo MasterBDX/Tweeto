@@ -1,0 +1,90 @@
+{% extends 'layout.html' %}
+{% block base %}
+{% load recommended %}
+
+
+<div class="row">
+  <div class="col-md-3">
+    <div class="card home-raw-box">
+      <div class="card-body text-left">
+        <div class="row">
+          <div class="card-title">
+            <span><i class="fas fa-dragon"></i></span>
+            <h4>Tweet Me</h4>
+          </div>
+
+          <div class="col-sm-12">
+            <span><i class="fa fa-home"></i></span>
+            <a href="{% url 'home' %}">Home</a>
+          </div>
+          {% if request.user.is_authenticated %}
+          <div class="col-sm-12">
+            <span><i class="fa fa-user-circle"></i></span>
+
+            <a href="{% url 'accounts:profile' user_slug=request.user.slug %}">Profile</a>
+          </div>
+          <div class="col-sm-12">
+            <span><i class="fas fa-sign-out-alt"></i></span>
+
+            <a href="{% url 'accounts:logout' %}"> Logout</a>
+
+          </div>
+          {% else %}
+          <div class="col-sm-12">
+            <span><i class="fas fa-sign-in-alt"></i></span>
+            <a href="{% url 'accounts:login' %}"> Login</a>
+
+          </div>
+          <div class="col-sm-12">
+            <span> <i class="fas fa-user-plus"></i></span>
+            <a href="{% url 'accounts:register' %}">Register</a>
+          </div>
+
+
+          {% endif %}
+
+        </div>
+
+        {% include 'tweets/snippets/reply_modal.html' %}
+
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-body">
+        <br />
+        <form method="post" action="{% url 'accounts:theme' %}" id='theme-form'>
+          <label class="color-picker-label text-center">Theme Color</label>
+          {% csrf_token %}
+          {{ color_form }}
+          <br />
+          <input id='current-path' type="hidden" name='current_path' value="{{request.path}}" />
+          <input id='current-color' type="color" name='current_color' value="{{color}}" />
+          <button type="submit" class="color-picker-btn">
+            Change
+          </button>
+        </form>
+      </div>
+    </div>
+
+  </div>
+
+  {% block content %}{% endblock %}
+  {% if not request.GET.q %}
+  <div class="col-md-3">
+    <div class="card search-box">
+      <div class="card-body">
+        {% include 'main/snippets/search_form.html'  %}
+        {% recommended_users request.user %}
+      </div>
+    </div>
+
+  </div>
+  {% else %}
+  {% include 'main/snippets/custom_search.html'  %}
+  {% endif %}
+</div>
+
+
+
+{% endblock %}

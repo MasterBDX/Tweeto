@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% block content %}
+{% load crispy_forms_tags %}
+<div class="col-md-6">
+    <div class="card add-tweet-box">
+        <div class="card-title">
+            <h6 class="h5">
+                <i class="fas fa-user-edit "></i> {{object.user.username|capfirst}}</h6>
+        </div>
+        <div class="card-body">
+            <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                {{form|crispy}}
+                <button class="btn btn-success">
+                    Save
+                </button>
+            </form>
+        </div>
+    </div>
+
+</div>
+{% endblock %}
