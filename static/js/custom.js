@@ -117,9 +117,9 @@ function loadTweetsContainer(containerID, featchOneID) {
       tweet.id = value.parent.id;
       isRetweet = '';
       let html_ = `
-                    Reply to 
+                     
                     <a class='reply-user' href="${tweet.url}">
-                      @${usernameCapitalized}
+                      ${usernameCapitalized}
                     </a> 
                   `
       usernameCapitalized = html_;
@@ -408,7 +408,7 @@ function loadTweetsContainer(containerID, featchOneID) {
                       `
     $('#replyModal').modal({})
     $('#id_content2').after(myInput)
-    $('#id_content2').val('@' + usernameID + ' ')
+    $('#id_content2').val('Reply to @' + usernameID + ' ')
     $('#replyModal').on('shown.bs.modal', function () {
       $('#id_content2').focus();
     })

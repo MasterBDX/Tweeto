@@ -19,7 +19,6 @@ class LikeToggleApiView(APIView):
         user = request.user
         tweet = get_object_or_404(Tweet, pk=pk)
         liked_tweet = Tweet.objects.like_toggle(user, tweet)
-        # data = TweetModelSerializer(liked_tweet).data
         liked_num = tweet.liked.all().count()
         return Response({'liked': liked_tweet,
                          'likedNum': liked_num})
