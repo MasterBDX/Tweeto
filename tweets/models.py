@@ -14,7 +14,6 @@ class TweetManager(models.Manager):
     def retweet(self, user, parent_obj):
         if parent_obj.parent:
             parent_obj = parent_obj.parent
-
         qs = Tweet.objects.filter(user=user, parent=parent_obj,
                                   timestamp__date=timezone.now(),
                                   reply=False)
