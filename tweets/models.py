@@ -4,6 +4,8 @@ from django.conf import settings
 from django.urls import reverse
 from django.utils import timezone
 
+from django_resized import ResizedImageField
+
 from .utils import get_tweet_image_name
 from .validators import validate_content
 
@@ -45,8 +47,8 @@ class Tweet(models.Model):
                                null=True, blank=True)
     liked = models.ManyToManyField(User, related_name='liked',
                                    blank=True)
-    image = models.ImageField(
-        upload_to=get_tweet_image_name, blank=True, null=True)
+    image = ResizedImageField(size=[500, 300],
+                              upload_to=get_tweet_image_name, blank=True, null=True)
     timestamp = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
     reply = models.BooleanField(verbose_name='Is a reply?', default=False)
