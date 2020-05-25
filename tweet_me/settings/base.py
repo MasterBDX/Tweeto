@@ -17,6 +17,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     # third party
+    'defender',
     'hashtags',
     'crispy_forms',
     'rest_framework',
